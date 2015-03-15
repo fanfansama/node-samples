@@ -1,0 +1,46 @@
+#!/usr/bin/env node
+
+var express = require('express')
+var app = require('../app')
+
+
+
+
+
+/////////////////////////////////////////////
+// templating
+/////////////////////////////////////////////
+app.set('view engine', 'jade');
+
+app.get('/', function (req, res) {
+  res.render('index', { title: 'Hey', message: 'Hello there!'});
+})
+
+/////////////////////////////////////////////
+// cookies
+/////////////////////////////////////////////
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+
+/////////////////////////////////////////////
+// erreur 500
+/////////////////////////////////////////////
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
+
+///////////////////////////////////////////////
+// serveur
+///////////////////////////////////////////////
+var server = app.listen(3000, function () {
+
+  var host = server.address().address
+  var port = server.address().port
+
+  console.log('Example app listening at http://%s:%s', host, port)
+
+})
+
